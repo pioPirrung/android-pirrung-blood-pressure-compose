@@ -1,4 +1,4 @@
-package de.pirrung.blood.pressure.ui.theme
+package de.pirrung.feature.blood.pressure.presentation.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
