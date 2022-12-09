@@ -95,9 +95,9 @@ class BloodPressureViewModel(
 
                 _avgState.value = avgState.value.copy(
                     timestamp = tmpMeasurement.timestamp,
-                    systolic = tmpMeasurement.systolic,
-                    diastolic = tmpMeasurement.diastolic,
-                    pulse = tmpMeasurement.pulse,
+                    systolic = tmpMeasurement.systolic!! / measurements.size,
+                    diastolic = tmpMeasurement.diastolic!! / measurements.size,
+                    pulse = tmpMeasurement.pulse!! / measurements.size,
                     note = tmpMeasurement.note
                 )
             }.launchIn(viewModelScope)

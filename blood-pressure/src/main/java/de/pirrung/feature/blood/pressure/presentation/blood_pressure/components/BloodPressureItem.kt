@@ -32,7 +32,7 @@ fun BloodPressureItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(64.dp)
+            .height(72.dp)
             .padding(start = 15.dp, end = 15.dp, top = 7.dp, bottom = 7.dp)
             .background(color = BackgroundSecondary),
         elevation = 5.dp,
