@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import de.pirrung.feature.blood.pressure.presentation.add_blood_pressure.AddBloodPressureMeasurementScreen
 import de.pirrung.feature.blood.pressure.presentation.blood_pressure.BloodPressureScreen
 import de.pirrung.feature.blood.pressure.presentation.theme.Typography
 import de.pirrung.feature.blood.pressure.presentation.util.Screen
@@ -25,7 +26,14 @@ fun BloodPressureAppNavigation(
         composable(Screen.BloodPressureScreen.route) {
             BloodPressureScreen(
                 viewModel = get(),
-                navToBloodPressureDetail = {}
+                navToBloodPressureDetail = {},
+                navToAddBloodPressureMeasurement = { navController.navigate(Screen.AddBloodPressureMeasurementScreen.route) }
+            )
+        }
+        composable(Screen.AddBloodPressureMeasurementScreen.route) {
+            AddBloodPressureMeasurementScreen(
+                viewModel = get(),
+                onSaveClicked = { navController.navigateUp() }
             )
         }
     }

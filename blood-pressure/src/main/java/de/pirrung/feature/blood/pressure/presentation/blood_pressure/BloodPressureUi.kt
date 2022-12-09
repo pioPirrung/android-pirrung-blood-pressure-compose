@@ -2,6 +2,8 @@ package de.pirrung.feature.blood.pressure.presentation.blood_pressure
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -14,17 +16,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import de.pirrung.feature.blood.pressure.presentation.blood_pressure.components.BloodPressureItem
 import de.pirrung.feature.blood.pressure.presentation.theme.*
 import org.koin.androidx.compose.get
 
 @Composable
 fun BloodPressureScreen(
     viewModel: BloodPressureViewModel = get(),
-    navToBloodPressureDetail: () -> Unit
+    navToBloodPressureDetail: () -> Unit,
+    navToAddBloodPressureMeasurement: () -> Unit
 ) {
     BloodPressureContent(
         viewModel = viewModel,
-        navToBloodPressureDetail = navToBloodPressureDetail
+        navToBloodPressureDetail = navToBloodPressureDetail,
+        navToAddBloodPressureMeasurement = navToAddBloodPressureMeasurement
     )
 
 }
@@ -33,6 +38,7 @@ fun BloodPressureScreen(
 private fun BloodPressureContent(
     viewModel: BloodPressureViewModel,
     navToBloodPressureDetail: () -> Unit,
+    navToAddBloodPressureMeasurement: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scaffoldState = rememberScaffoldState()
@@ -65,7 +71,7 @@ private fun BloodPressureContent(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = navToBloodPressureDetail,
+                onClick = navToAddBloodPressureMeasurement,
                 backgroundColor = Purple,
                 content = {
                     Icon(
@@ -99,9 +105,18 @@ private fun BloodPressureContent(
                         color = TextVariant
                     )
                     Text(
-                        text = "${viewModel.averageBloodPressureMeasurement.systolic}/${viewModel.averageBloodPressureMeasurement.diastolic}",
+                        text = "${viewModel.avgState.value.systolic}/${viewModel.avgState.value.diastolic}",
                         style = Typography.h1,
                         color = TextSecondary
+                    )
+                }
+            }
+            LazyColumn {
+                itemsIndexed(viewModel.state.value.measurements) { index, measurement ->
+                    BloodPressureItem(
+                        index = index,
+                        bloodPressure = measurement,
+                        onItemClicked = {}
                     )
                 }
             }

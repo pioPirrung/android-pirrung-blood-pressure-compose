@@ -78,6 +78,7 @@ fun BloodPressureItemPreview() {
             systolic = 128,
             diastolic = 100,
             pulse = 94,
+            note = "Test",
             timestamp = Date().time
         ),
         onItemClicked = { }

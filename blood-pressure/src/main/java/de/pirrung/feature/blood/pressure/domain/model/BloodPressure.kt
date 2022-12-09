@@ -9,6 +9,7 @@ data class BloodPressure(
     var systolic: Int? = null,
     var diastolic: Int? = null,
     var pulse: Int? = null,
+    var note: String? = null,
     var timestamp: Long,
 )
 

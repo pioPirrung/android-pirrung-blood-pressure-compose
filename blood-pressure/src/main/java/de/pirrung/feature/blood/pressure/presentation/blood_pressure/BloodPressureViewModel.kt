@@ -27,8 +27,17 @@ class BloodPressureViewModel(
     private val _state = mutableStateOf(BloodPressureState())
     val state: State<BloodPressureState> = _state
 
-    val averageBloodPressureMeasurement: BloodPressure =
-        BloodPressure(timestamp = Date().time, pulse = 0, systolic = 0, diastolic = 0)
+    private val _avgState = mutableStateOf(
+        BloodPressure(
+            timestamp = Date().time,
+            pulse = 0,
+            systolic = 0,
+            diastolic = 0,
+            note = ""
+        )
+    )
+    val avgState: State<BloodPressure> = _avgState
+
     private var recentlyDeletedMeasurement: BloodPressure? = null
     private var getMeasurementsJob: Job? = null
     private var getFirstTenMeasurementsJob: Job? = null
@@ -70,13 +79,27 @@ class BloodPressureViewModel(
         getFirstTenMeasurementsJob?.cancel()
         getFirstTenMeasurementsJob =
             getFirstTenBloodPressureMeasurements.invoke().onEach { measurements ->
-                measurements.map { bloodPressure ->
-                    averageBloodPressureMeasurement.apply {
-                        this.pulse?.plus(bloodPressure.pulse!!)
-                        this.systolic?.plus(bloodPressure.systolic!!)
-                        this.diastolic?.plus(bloodPressure.diastolic!!)
-                    }
+                val tmpMeasurement = BloodPressure(
+                    timestamp = Date().time,
+                    pulse = 0,
+                    systolic = 0,
+                    diastolic = 0,
+                    note = "Avg Test"
+                )
+
+                measurements.forEach { item ->
+                    tmpMeasurement.pulse = tmpMeasurement.pulse!! + item.pulse!!
+                    tmpMeasurement.systolic = tmpMeasurement.systolic!! + item.systolic!!
+                    tmpMeasurement.diastolic = tmpMeasurement.diastolic!! + item.diastolic!!
                 }
+
+                _avgState.value = avgState.value.copy(
+                    timestamp = tmpMeasurement.timestamp,
+                    systolic = tmpMeasurement.systolic,
+                    diastolic = tmpMeasurement.diastolic,
+                    pulse = tmpMeasurement.pulse,
+                    note = tmpMeasurement.note
+                )
             }.launchIn(viewModelScope)
     }
 
