@@ -16,6 +16,10 @@ class BloodPressureRepositoryImpl (
         return bloodPressureDao.getBloodPressureMeasurementById(id = id)
     }
 
+    override fun getFirstTenBloodPressureMeasurements(): Flow<List<BloodPressure>> {
+        return bloodPressureDao.getFirstTenBloodPressureMeasurements()
+    }
+
     override suspend fun insertBloodPressureMeasurement(measurement: BloodPressure) {
         bloodPressureDao.insertBloodPressureMeasurement(measurement = measurement)
     }

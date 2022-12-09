@@ -7,8 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import de.pirrung.feature.blood.pressure.presentation.blood_pressure.BloodPressureScreen
 import de.pirrung.feature.blood.pressure.presentation.theme.Typography
 import de.pirrung.feature.blood.pressure.presentation.util.Screen
+import org.koin.androidx.compose.get
 
 @Composable
 fun BloodPressureAppNavigation(
@@ -21,7 +23,10 @@ fun BloodPressureAppNavigation(
         modifier = modifier
     ) {
         composable(Screen.BloodPressureScreen.route) {
-            Text(text = "Hallo Welt", style = Typography.h1)
+            BloodPressureScreen(
+                viewModel = get(),
+                navToBloodPressureDetail = {}
+            )
         }
     }
 }

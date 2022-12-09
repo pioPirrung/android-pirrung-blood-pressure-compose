@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey
 @Entity
 data class BloodPressure(
     @PrimaryKey val id: Int? = null,
-    val systolic: Int,
-    val diastolic: Int,
-    val pulse: Int,
-    val timestamp: Long,
+    var systolic: Int? = null,
+    var diastolic: Int? = null,
+    var pulse: Int? = null,
+    var timestamp: Long,
 )
 
 class InvalidMeasurementException(message: String): Exception(message)

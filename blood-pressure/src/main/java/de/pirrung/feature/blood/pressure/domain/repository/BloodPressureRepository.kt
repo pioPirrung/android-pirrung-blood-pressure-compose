@@ -9,6 +9,8 @@ interface BloodPressureRepository {
 
     suspend fun getBloodPressureMeasurementById(id: Int) : BloodPressure?
 
+    fun getFirstTenBloodPressureMeasurements(): Flow<List<BloodPressure>>
+
     suspend fun insertBloodPressureMeasurement(measurement: BloodPressure)
 
     suspend fun deleteBloodPressureMeasurement(measurement: BloodPressure)

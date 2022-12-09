@@ -17,6 +17,9 @@ interface BloodPressureDao {
     @Query("SELECT * FROM bloodpressure WHERE id = :id")
     suspend fun getBloodPressureMeasurementById(id: Int): BloodPressure?
 
+    @Query("SELECT * FROM bloodpressure ORDER BY timestamp DESC LIMIT 10")
+    fun getFirstTenBloodPressureMeasurements(): Flow<List<BloodPressure>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBloodPressureMeasurement(measurement: BloodPressure)
 
