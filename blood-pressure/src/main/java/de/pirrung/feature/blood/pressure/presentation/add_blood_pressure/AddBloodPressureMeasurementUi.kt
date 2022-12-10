@@ -1,5 +1,7 @@
 package de.pirrung.feature.blood.pressure.presentation.add_blood_pressure
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.FloatingActionButton
@@ -10,9 +12,10 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import de.pirrung.feature.blood.pressure.presentation.add_blood_pressure.components.TransparentHintTextField
@@ -31,6 +34,7 @@ fun AddBloodPressureMeasurementScreen(
     val noteState = viewModel.noteValue.value
 
     val scaffoldState = rememberScaffoldState()
+    val focusManager = LocalFocusManager.current
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -66,8 +70,15 @@ fun AddBloodPressureMeasurementScreen(
             modifier = Modifier
                 .padding(padding)
                 .fillMaxSize()
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) {
+                    focusManager.clearFocus()
+                }
         ) {
             TransparentHintTextField(
+                modifier = Modifier.padding(top = 10.dp),
                 text = systolicState.text,
                 hint = systolicState.hint,
                 onValueChange = {
@@ -77,14 +88,6 @@ fun AddBloodPressureMeasurementScreen(
                         )
                     )
                 },
-                onFocusChange = {
-                    viewModel.onEvent(
-                        AddBloodPressureMeasurementEvent.ChangeSystolicFocus(
-                            it
-                        )
-                    )
-                },
-                isHintVisible = systolicState.isHintVisible,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -101,14 +104,6 @@ fun AddBloodPressureMeasurementScreen(
                         )
                     )
                 },
-                onFocusChange = {
-                    viewModel.onEvent(
-                        AddBloodPressureMeasurementEvent.ChangeDiastolicFocus(
-                            it
-                        )
-                    )
-                },
-                isHintVisible = diastolicState.isHintVisible,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -125,14 +120,6 @@ fun AddBloodPressureMeasurementScreen(
                         )
                     )
                 },
-                onFocusChange = {
-                    viewModel.onEvent(
-                        AddBloodPressureMeasurementEvent.ChangePulseFocus(
-                            it
-                        )
-                    )
-                },
-                isHintVisible = pulseState.isHintVisible,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -140,7 +127,9 @@ fun AddBloodPressureMeasurementScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             TransparentHintTextField(
-                modifier = Modifier.fillMaxHeight(),
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(bottom = 10.dp),
                 text = noteState.text,
                 hint = noteState.hint,
                 onValueChange = {
@@ -149,15 +138,7 @@ fun AddBloodPressureMeasurementScreen(
                             it
                         )
                     )
-                },
-                onFocusChange = {
-                    viewModel.onEvent(
-                        AddBloodPressureMeasurementEvent.ChangeNoteFocus(
-                            it
-                        )
-                    )
-                },
-                isHintVisible = noteState.isHintVisible
+                }
             )
         }
     }

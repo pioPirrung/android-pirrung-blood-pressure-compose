@@ -23,7 +23,7 @@ import org.koin.androidx.compose.get
 @Composable
 fun BloodPressureScreen(
     viewModel: BloodPressureViewModel = get(),
-    navToBloodPressureDetail: () -> Unit,
+    navToBloodPressureDetail: (Int?) -> Unit,
     navToAddBloodPressureMeasurement: () -> Unit
 ) {
     BloodPressureContent(
@@ -37,7 +37,7 @@ fun BloodPressureScreen(
 @Composable
 private fun BloodPressureContent(
     viewModel: BloodPressureViewModel,
-    navToBloodPressureDetail: () -> Unit,
+    navToBloodPressureDetail: (Int?) -> Unit,
     navToAddBloodPressureMeasurement: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -100,7 +100,7 @@ private fun BloodPressureContent(
                     verticalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Text(
-                        text = "Avg. Blutdruck",
+                        text = "Durchschn. Blutdruck",
                         style = Typography.body1,
                         color = TextVariant
                     )
@@ -116,7 +116,7 @@ private fun BloodPressureContent(
                     BloodPressureItem(
                         index = index,
                         bloodPressure = measurement,
-                        onItemClicked = {}
+                        onItemClicked = { navToBloodPressureDetail(measurement.id) }
                     )
                 }
             }

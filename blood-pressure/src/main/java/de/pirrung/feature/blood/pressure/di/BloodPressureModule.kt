@@ -9,6 +9,7 @@ import de.pirrung.feature.blood.pressure.domain.repository.BloodPressureReposito
 import de.pirrung.feature.blood.pressure.domain.use_case.*
 import de.pirrung.feature.blood.pressure.presentation.add_blood_pressure.AddBloodPressureMeasurementViewModel
 import de.pirrung.feature.blood.pressure.presentation.blood_pressure.BloodPressureViewModel
+import de.pirrung.feature.blood.pressure.presentation.blood_pressure_detail.BloodPressureDetailViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -50,7 +51,11 @@ val bloodPressureModule = module {
     }
 
     viewModel {
-        AddBloodPressureMeasurementViewModel(get(), get())
+        AddBloodPressureMeasurementViewModel(get())
+    }
+
+    viewModel {
+        BloodPressureDetailViewModel(get())
     }
 }
 

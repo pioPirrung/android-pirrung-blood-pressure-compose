@@ -14,23 +14,22 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class AddBloodPressureMeasurementViewModel(
-    private val addBloodPressureMeasurement: AddBloodPressureMeasurement,
-    private val getBloodPressureMeasurement: GetBloodPressureMeasurement
+    private val addBloodPressureMeasurement: AddBloodPressureMeasurement
 ) : ViewModel() {
 
     private val _systolicValue =
-        mutableStateOf(BloodPressureTextFieldState(hint = "Systolischen Druck eingeben"))
+        mutableStateOf(BloodPressureTextFieldState(hint = "Systolischer Druck"))
     val systolicValue: State<BloodPressureTextFieldState> = _systolicValue
 
     private val _diastolicValue =
-        mutableStateOf(BloodPressureTextFieldState(hint = "Diastolischen Druck eingeben"))
+        mutableStateOf(BloodPressureTextFieldState(hint = "Diastolischer Druck"))
     val diastolicValue: State<BloodPressureTextFieldState> = _diastolicValue
 
-    private val _pulseValue = mutableStateOf(BloodPressureTextFieldState(hint = "Puls eingeben"))
+    private val _pulseValue = mutableStateOf(BloodPressureTextFieldState(hint = "Puls"))
     val pulseValue: State<BloodPressureTextFieldState> = _pulseValue
 
     private val _noteValue =
-        mutableStateOf(BloodPressureTextFieldState(hint = "Hier kannst du Notizen einfügen"))
+        mutableStateOf(BloodPressureTextFieldState(hint = "Notiz"))
     val noteValue: State<BloodPressureTextFieldState> = _noteValue
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
@@ -70,38 +69,14 @@ class AddBloodPressureMeasurementViewModel(
             is AddBloodPressureMeasurementEvent.EnteredSystolicValue -> {
                 _systolicValue.value = systolicValue.value.copy(text = event.value)
             }
-            is AddBloodPressureMeasurementEvent.ChangeSystolicFocus -> {
-                _systolicValue.value =
-                    systolicValue.value.copy(
-                        isHintVisible = !event.focusState.isFocused && systolicValue.value.text.isBlank()
-                    )
-            }
             is AddBloodPressureMeasurementEvent.EnteredDiastolicValue -> {
                 _diastolicValue.value = diastolicValue.value.copy(text = event.value)
-            }
-            is AddBloodPressureMeasurementEvent.ChangeDiastolicFocus -> {
-                _diastolicValue.value =
-                    diastolicValue.value.copy(
-                        isHintVisible = !event.focusState.isFocused && diastolicValue.value.text.isBlank()
-                    )
             }
             is AddBloodPressureMeasurementEvent.EnteredPulseValue -> {
                 _pulseValue.value = pulseValue.value.copy(text = event.value)
             }
-            is AddBloodPressureMeasurementEvent.ChangePulseFocus -> {
-                _pulseValue.value =
-                    pulseValue.value.copy(
-                        isHintVisible = !event.focusState.isFocused && pulseValue.value.text.isBlank()
-                    )
-            }
             is AddBloodPressureMeasurementEvent.EnteredNote -> {
                 _noteValue.value = noteValue.value.copy(text = event.value)
-            }
-            is AddBloodPressureMeasurementEvent.ChangeNoteFocus -> {
-                _noteValue.value =
-                    noteValue.value.copy(
-                        isHintVisible = !event.focusState.isFocused && noteValue.value.text.isBlank()
-                    )
             }
             is AddBloodPressureMeasurementEvent.SaveMeasurement -> {
                 viewModelScope.launch {
