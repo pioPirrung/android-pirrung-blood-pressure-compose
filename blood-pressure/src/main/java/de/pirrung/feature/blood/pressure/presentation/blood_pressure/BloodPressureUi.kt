@@ -102,7 +102,7 @@ private fun BloodPressureContent(
                     Text(
                         text = "Durchschn. Blutdruck",
                         style = Typography.body1,
-                        color = TextVariant
+                        color = TextSecondary
                     )
                     Text(
                         text = "${viewModel.avgState.value.systolic}/${viewModel.avgState.value.diastolic}",
@@ -114,7 +114,7 @@ private fun BloodPressureContent(
             LazyColumn {
                 itemsIndexed(viewModel.state.value.measurements) { index, measurement ->
                     BloodPressureItem(
-                        index = index,
+                        index = index + 1,
                         bloodPressure = measurement,
                         onItemClicked = { navToBloodPressureDetail(measurement.id) }
                     )

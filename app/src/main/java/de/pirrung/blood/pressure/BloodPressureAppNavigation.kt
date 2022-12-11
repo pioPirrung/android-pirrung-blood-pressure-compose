@@ -55,7 +55,8 @@ fun BloodPressureAppNavigation(
             val id = it.arguments?.getInt("bloodPressureId")
             BloodPressureDetailScreen(
                 id = id,
-                viewModel = get()
+                viewModel = get(),
+                onBackClicked = { navController.navigateUp() }
             )
         }
     }
