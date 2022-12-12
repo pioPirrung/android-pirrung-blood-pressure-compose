@@ -47,7 +47,7 @@ val bloodPressureModule = module {
     }
 
     viewModel {
-        BloodPressureViewModel(get(), get(), get(), get())
+        BloodPressureViewModel(get(), get())
     }
 
     viewModel {
@@ -64,7 +64,6 @@ private fun provideDatabase(application: Application): BloodPressureDatabase =
         application,
         BloodPressureDatabase::class.java,
         BloodPressureDatabase.DB_NAME
-    )
-        .build()
+    ).build()
 
 private fun provideDao(db: BloodPressureDatabase): BloodPressureDao = db.bloodPressureDao

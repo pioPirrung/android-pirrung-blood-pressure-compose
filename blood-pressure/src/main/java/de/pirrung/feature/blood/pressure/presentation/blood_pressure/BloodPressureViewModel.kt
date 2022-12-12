@@ -18,8 +18,6 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 class BloodPressureViewModel(
-    private val addBloodPressureMeasurement: AddBloodPressureMeasurement,
-    private val deleteBloodPressureMeasurement: DeleteBloodPressureMeasurement,
     private val getBloodPressureMeasurements: GetBloodPressureMeasurements,
     private val getFirstTenBloodPressureMeasurements: GetFirstTenBloodPressureMeasurements
 ) : ViewModel() {
@@ -38,7 +36,6 @@ class BloodPressureViewModel(
     )
     val avgState: State<BloodPressure> = _avgState
 
-    private var recentlyDeletedMeasurement: BloodPressure? = null
     private var getMeasurementsJob: Job? = null
     private var getFirstTenMeasurementsJob: Job? = null
 

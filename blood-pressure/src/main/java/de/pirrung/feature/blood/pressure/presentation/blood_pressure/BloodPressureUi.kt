@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import de.pirrung.feature.blood.pressure.presentation.blood_pressure.components.BloodPressureItem
+import de.pirrung.feature.blood.pressure.presentation.blood_pressure.components.OrderDropdownMenu
 import de.pirrung.feature.blood.pressure.presentation.theme.*
 import org.koin.androidx.compose.get
 
@@ -42,7 +43,9 @@ private fun BloodPressureContent(
     modifier: Modifier = Modifier
 ) {
     val scaffoldState = rememberScaffoldState()
-    val showMenu = remember { mutableStateOf(false) }
+    val bloodPressureState = viewModel.state.value
+    val bloodPressureAvgState = viewModel.avgState.value
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -51,25 +54,13 @@ private fun BloodPressureContent(
                 backgroundColor = Background,
                 contentColor = Color.White,
                 actions = {
-                    IconButton(onClick = { showMenu.value = !showMenu.value }) {
-                        Icon(imageVector = Icons.Default.MoreVert, contentDescription = null)
-                    }
-                    DropdownMenu(
-                        modifier = modifier.background(BackgroundSecondary),
-                        expanded = showMenu.value,
-                        onDismissRequest = { showMenu.value = false }
-                    ) {
-                        DropdownMenuItem(onClick = {
-                            /*TODO*/
-                        }) {
-                            Icon(imageVector = Icons.Filled.Refresh, contentDescription = null)
+                    OrderDropdownMenu(
+                        modifier = Modifier.background(BackgroundSecondary),
+                        bloodPressureOrder = bloodPressureState.order,
+                        onOrderClicked = {
+                            viewModel.onEvent(BloodPressureEvent.Order(it))
                         }
-                        DropdownMenuItem(onClick = {
-                            /*TODO*/
-                        }) {
-                            Icon(imageVector = Icons.Filled.Call, contentDescription = null)
-                        }
-                    }
+                    )
                 }
             )
         },
@@ -109,14 +100,14 @@ private fun BloodPressureContent(
                         color = TextSecondary
                     )
                     Text(
-                        text = "${viewModel.avgState.value.systolic}/${viewModel.avgState.value.diastolic}",
+                        text = "${bloodPressureAvgState.systolic}/${bloodPressureAvgState.diastolic}",
                         style = Typography.h1,
                         color = TextSecondary
                     )
                 }
             }
             LazyColumn {
-                itemsIndexed(viewModel.state.value.measurements) { index, measurement ->
+                itemsIndexed(bloodPressureState.measurements) { index, measurement ->
                     BloodPressureItem(
                         index = index + 1,
                         bloodPressure = measurement,
