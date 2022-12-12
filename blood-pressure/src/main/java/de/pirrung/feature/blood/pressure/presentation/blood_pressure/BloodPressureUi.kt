@@ -59,10 +59,14 @@ private fun BloodPressureContent(
                         expanded = showMenu.value,
                         onDismissRequest = { showMenu.value = false }
                     ) {
-                        DropdownMenuItem(onClick = { /*TODO*/ }) {
+                        DropdownMenuItem(onClick = {
+                            /*TODO*/
+                        }) {
                             Icon(imageVector = Icons.Filled.Refresh, contentDescription = null)
                         }
-                        DropdownMenuItem(onClick = { /*TODO*/ }) {
+                        DropdownMenuItem(onClick = {
+                            /*TODO*/
+                        }) {
                             Icon(imageVector = Icons.Filled.Call, contentDescription = null)
                         }
                     }

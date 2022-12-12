@@ -4,12 +4,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -19,14 +18,18 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import de.pirrung.feature.blood.pressure.presentation.add_blood_pressure.components.TransparentHintTextField
+import de.pirrung.feature.blood.pressure.presentation.blood_pressure_detail.BloodPressureDetailEvent
+import de.pirrung.feature.blood.pressure.presentation.theme.Background
 import de.pirrung.feature.blood.pressure.presentation.theme.Purple
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 
 @Composable
 fun AddBloodPressureMeasurementScreen(
     viewModel: AddBloodPressureMeasurementViewModel = get(),
     onSaveClicked: () -> Unit,
+    onBackClicked: () -> Unit
 ) {
     val systolicState = viewModel.systolicValue.value
     val diastolicState = viewModel.diastolicValue.value
@@ -50,6 +53,19 @@ fun AddBloodPressureMeasurementScreen(
     }
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { },
+                elevation = 0.dp,
+                backgroundColor = Background,
+                contentColor = Color.White,
+                navigationIcon = {
+                    IconButton(onClick = onBackClicked) {
+                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                    }
+                },
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -78,7 +94,6 @@ fun AddBloodPressureMeasurementScreen(
                 }
         ) {
             TransparentHintTextField(
-                modifier = Modifier.padding(top = 10.dp),
                 text = systolicState.text,
                 hint = systolicState.hint,
                 onValueChange = {

@@ -41,7 +41,9 @@ fun BloodPressureAppNavigation(
         composable(route = Screen.AddBloodPressureMeasurementScreen.route) {
             AddBloodPressureMeasurementScreen(
                 viewModel = get(),
-                onSaveClicked = { navController.navigateUp() })
+                onSaveClicked = { navController.navigateUp() },
+                onBackClicked = { navController.navigateUp() }
+            )
         }
         composable(
             route = Screen.BloodPressureDetailScreen.route + "?bloodPressureId={bloodPressureId}",

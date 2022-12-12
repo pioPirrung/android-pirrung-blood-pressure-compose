@@ -53,18 +53,6 @@ class BloodPressureViewModel(
                 if (state.value.order::class == event.order::class && state.value.order.orderType == event.order.orderType) return
                 getMeasurements(event.order)
             }
-            is BloodPressureEvent.DeleteBloodPressureMeasurement -> {
-                viewModelScope.launch {
-                    deleteBloodPressureMeasurement.invoke(event.measurement)
-                    recentlyDeletedMeasurement = event.measurement
-                }
-            }
-            is BloodPressureEvent.RestoreBloodPressureMeasurement -> {
-                viewModelScope.launch {
-                    addBloodPressureMeasurement.invoke(recentlyDeletedMeasurement ?: return@launch)
-                    recentlyDeletedMeasurement = null
-                }
-            }
         }
     }
 

@@ -55,7 +55,7 @@ val bloodPressureModule = module {
     }
 
     viewModel {
-        BloodPressureDetailViewModel(get())
+        BloodPressureDetailViewModel(get(), get())
     }
 }
 

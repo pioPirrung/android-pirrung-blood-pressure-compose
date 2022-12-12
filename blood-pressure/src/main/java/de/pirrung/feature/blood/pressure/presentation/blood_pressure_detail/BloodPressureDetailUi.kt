@@ -1,20 +1,18 @@
 package de.pirrung.feature.blood.pressure.presentation.blood_pressure_detail
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewModelScope
 import de.pirrung.feature.blood.pressure.presentation.blood_pressure_detail.components.BloodPressureDetailCard
 import de.pirrung.feature.blood.pressure.presentation.theme.Background
-import de.pirrung.feature.blood.pressure.presentation.theme.BackgroundSecondary
-import de.pirrung.feature.blood.pressure.presentation.theme.Typography
+import de.pirrung.feature.blood.pressure.presentation.theme.DetailTypography
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 
@@ -25,13 +23,12 @@ fun BloodPressureDetailScreen(
     viewModel: BloodPressureDetailViewModel = get(),
     onBackClicked: () -> Unit
 ) {
-    LaunchedEffect(key1 = true) {
-        viewModel.viewModelScope.launch {
-            id?.let {
-                viewModel.getMeasurementById(id)
-            }
-        }
+
+    id?.let {
+        viewModel.onEvent(event = BloodPressureDetailEvent.LoadBloodPressureMeasurement(id = id))
     }
+
+    val coroutineScope = rememberCoroutineScope()
     val measurementState = viewModel.measurementState.value
 
     Scaffold(
@@ -44,6 +41,21 @@ fun BloodPressureDetailScreen(
                 navigationIcon = {
                     IconButton(onClick = onBackClicked) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                    }
+                },
+                actions = {
+                    IconButton(onClick = {
+                        coroutineScope.launch {
+                            viewModel.onEvent(
+                                event = BloodPressureDetailEvent.DeleteBloodPressureMeasurement(
+                                    measurement = measurementState.measurement!!
+                                )
+                            )
+                            onBackClicked()
+                        }
+                    }
+                    ) {
+                        Icon(imageVector = Icons.Default.Delete, contentDescription = null)
                     }
                 }
             )
@@ -88,14 +100,14 @@ fun BloodPressureDetailScreen(
                 valueText = measurementState.measurement?.pulse.toString(),
                 valueUnit = "bpm"
             )
-            if(measurementState.measurement?.note?.isNotBlank() == true)
+            if (measurementState.measurement?.note?.isNotBlank() == true)
                 BloodPressureDetailCard(
                     modifier = Modifier
                         .padding(start = 15.dp, end = 15.dp, bottom = 15.dp)
                         .fillMaxHeight()
                         .fillMaxWidth(),
                     verticalArrangement = Arrangement.Top,
-                    valueTextStyle = Typography.body2,
+                    valueTextStyle = DetailTypography.body2,
                     headerText = "Notiz",
                     valueText = measurementState.measurement.note!!,
                     valueUnit = ""
@@ -107,7 +119,7 @@ fun BloodPressureDetailScreen(
                         .fillMaxHeight()
                         .fillMaxWidth(),
                     verticalArrangement = Arrangement.Top,
-                    valueTextStyle = Typography.body2,
+                    valueTextStyle = DetailTypography.body2,
                     headerText = "Notiz",
                     valueText = "Du hast bei dieser Messung keine Notiz hinzugefügt.",
                     valueUnit = ""
