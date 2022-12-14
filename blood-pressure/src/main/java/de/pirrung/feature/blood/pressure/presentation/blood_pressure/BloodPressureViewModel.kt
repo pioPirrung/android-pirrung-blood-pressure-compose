@@ -5,13 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.pirrung.feature.blood.pressure.domain.model.BloodPressure
-import de.pirrung.feature.blood.pressure.domain.use_case.AddBloodPressureMeasurement
-import de.pirrung.feature.blood.pressure.domain.use_case.DeleteBloodPressureMeasurement
 import de.pirrung.feature.blood.pressure.domain.use_case.GetBloodPressureMeasurements
 import de.pirrung.feature.blood.pressure.domain.use_case.GetFirstTenBloodPressureMeasurements
 import de.pirrung.feature.blood.pressure.domain.util.BloodPressureOrder
 import de.pirrung.feature.blood.pressure.domain.util.OrderType
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -36,6 +36,9 @@ class BloodPressureViewModel(
     )
     val avgState: State<BloodPressure> = _avgState
 
+    private val _eventFlow = MutableSharedFlow<BloodPressureEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
+
     private var getMeasurementsJob: Job? = null
     private var getFirstTenMeasurementsJob: Job? = null
 
@@ -53,6 +56,15 @@ class BloodPressureViewModel(
                     return
                 }
                 getMeasurements(event.order)
+            }
+            is BloodPressureEvent.ShowInfoSnackBar -> {
+                viewModelScope.launch {
+                    _eventFlow.emit(
+                        BloodPressureEvent.ShowInfoSnackBar(
+                            message = "Der durchschnittliche Blutdruck wird anhand deiner letzten 10 Messungen berechnet."
+                        )
+                    )
+                }
             }
         }
     }

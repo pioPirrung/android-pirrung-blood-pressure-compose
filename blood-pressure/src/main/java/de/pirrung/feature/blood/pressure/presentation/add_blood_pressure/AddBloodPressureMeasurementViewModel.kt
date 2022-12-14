@@ -2,13 +2,11 @@ package de.pirrung.feature.blood.pressure.presentation.add_blood_pressure
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.pirrung.feature.blood.pressure.domain.model.BloodPressure
 import de.pirrung.feature.blood.pressure.domain.model.InvalidMeasurementException
 import de.pirrung.feature.blood.pressure.domain.use_case.AddBloodPressureMeasurement
-import de.pirrung.feature.blood.pressure.domain.use_case.GetBloodPressureMeasurement
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -36,33 +34,6 @@ class AddBloodPressureMeasurementViewModel(
     val eventFlow = _eventFlow.asSharedFlow()
 
     private var currentBloodPressureId: Int? = null
-
-//    init {
-//        savedSateHandle.get<Int>("bloodPressureId")?.let { bloodPressureId ->
-//            if (bloodPressureId != -1)
-//                viewModelScope.launch {
-//                    getBloodPressureMeasurement.invoke(bloodPressureId)?.also { bloodPressure ->
-//                        currentBloodPressureId = bloodPressure.id
-//                        _systolicValue.value = systolicValue.value.copy(
-//                            text = bloodPressure.systolic.toString(),
-//                            isHintVisible = false
-//                        )
-//                        _diastolicValue.value = diastolicValue.value.copy(
-//                            text = bloodPressure.diastolic.toString(),
-//                            isHintVisible = false
-//                        )
-//                        _pulseValue.value = pulseValue.value.copy(
-//                            text = bloodPressure.pulse.toString(),
-//                            isHintVisible = false
-//                        )
-//                        _noteValue.value = noteValue.value.copy(
-//                            text = bloodPressure.note ?: "",
-//                            isHintVisible = false
-//                        )
-//                    }
-//                }
-//        }
-//    }
 
     fun onEvent(event: AddBloodPressureMeasurementEvent) {
         when (event) {
