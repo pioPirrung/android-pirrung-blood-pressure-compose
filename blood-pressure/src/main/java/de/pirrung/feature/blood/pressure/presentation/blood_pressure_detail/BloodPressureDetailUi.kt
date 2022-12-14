@@ -1,7 +1,16 @@
 package de.pirrung.feature.blood.pressure.presentation.blood_pressure_detail
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.IconButton
+import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
@@ -18,7 +27,6 @@ import org.koin.androidx.compose.get
 
 @Composable
 fun BloodPressureDetailScreen(
-    modifier: Modifier = Modifier,
     id: Int? = null,
     viewModel: BloodPressureDetailViewModel = get(),
     onBackClicked: () -> Unit

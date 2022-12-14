@@ -1,7 +1,10 @@
 package de.pirrung.feature.blood.pressure.presentation.blood_pressure.components
 
-import androidx.compose.foundation.background
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
@@ -10,8 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import de.pirrung.feature.blood.pressure.domain.util.BloodPressureOrder
 import de.pirrung.feature.blood.pressure.domain.util.OrderType
-import de.pirrung.feature.blood.pressure.presentation.theme.BackgroundSecondary
 
+@Suppress("FunctionNaming")
 @Composable
 fun OrderDropdownMenu(
     modifier: Modifier = Modifier,

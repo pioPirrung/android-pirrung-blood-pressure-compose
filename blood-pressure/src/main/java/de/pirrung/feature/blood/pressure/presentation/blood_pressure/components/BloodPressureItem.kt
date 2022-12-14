@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 @OptIn(ExperimentalMaterialApi::class)
+@Suppress("FunctionNaming")
 @Composable
 fun BloodPressureItem(
     index: Int,
@@ -69,6 +70,7 @@ fun BloodPressureItem(
 }
 
 @Preview
+@Suppress("FunctionNaming")
 @Composable
 fun BloodPressureItemPreview() {
     BloodPressureItem(

@@ -1,6 +1,9 @@
 package de.pirrung.feature.blood.pressure.presentation.blood_pressure_detail.components
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import de.pirrung.feature.blood.pressure.presentation.theme.BackgroundSecondary
 import de.pirrung.feature.blood.pressure.presentation.theme.Typography
 
+@Suppress("LongParameterList", "FunctionNaming")
 @Composable
 fun BloodPressureDetailCard(
     modifier: Modifier = Modifier,

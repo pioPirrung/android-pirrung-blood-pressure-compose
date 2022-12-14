@@ -47,7 +47,11 @@ class BloodPressureViewModel(
     fun onEvent(event: BloodPressureEvent) {
         when (event) {
             is BloodPressureEvent.Order -> {
-                if (state.value.order::class == event.order::class && state.value.order.orderType == event.order.orderType) return
+                if (state.value.order::class == event.order::class
+                    && state.value.order.orderType == event.order.orderType
+                ) {
+                    return
+                }
                 getMeasurements(event.order)
             }
         }
@@ -56,7 +60,10 @@ class BloodPressureViewModel(
     private fun getMeasurements(order: BloodPressureOrder) {
         getMeasurementsJob?.cancel()
         getMeasurementsJob = getBloodPressureMeasurements.invoke(order).onEach { measurements ->
-            _state.value = state.value.copy(measurements = measurements)
+            _state.value = state.value.copy(
+                measurements = measurements,
+                order = order
+            )
         }.launchIn(viewModelScope)
     }
 
