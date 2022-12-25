@@ -97,11 +97,12 @@ class BloodPressureViewModel(
                     tmpMeasurement.diastolic = tmpMeasurement.diastolic!! + item.diastolic!!
                 }
 
+                val divider = if (measurements.isEmpty()) 1 else measurements.size
                 _avgState.value = avgState.value.copy(
                     timestamp = tmpMeasurement.timestamp,
-                    systolic = tmpMeasurement.systolic!! / measurements.size,
-                    diastolic = tmpMeasurement.diastolic!! / measurements.size,
-                    pulse = tmpMeasurement.pulse!! / measurements.size,
+                    systolic = tmpMeasurement.systolic!! / divider,
+                    diastolic = tmpMeasurement.diastolic!! / divider,
+                    pulse = tmpMeasurement.pulse!! / divider,
                     note = tmpMeasurement.note
                 )
             }.launchIn(viewModelScope)
