@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
@@ -99,7 +100,8 @@ fun AddBloodPressureMeasurementScreen(
                     interactionSource = remember { MutableInteractionSource() }
                 ) {
                     focusManager.clearFocus()
-                }
+                },
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             TransparentHintTextField(
                 text = systolicState.text,
@@ -115,8 +117,6 @@ fun AddBloodPressureMeasurementScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
             TransparentHintTextField(
                 text = diastolicState.text,
                 hint = diastolicState.hint,
@@ -131,8 +131,6 @@ fun AddBloodPressureMeasurementScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
             TransparentHintTextField(
                 text = pulseState.text,
                 hint = pulseState.hint,
@@ -146,8 +144,6 @@ fun AddBloodPressureMeasurementScreen(
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
-
-            Spacer(modifier = Modifier.height(16.dp))
 
             TransparentHintTextField(
                 modifier = Modifier
