@@ -69,7 +69,7 @@ class AddBloodPressureMeasurementViewModel(
                         ))
                     } catch (e: NumberFormatException) {
                         _eventFlow.emit(UiEvent.ShowSnackBar(
-                            message = "Messung konnte nicht gespeichert werden. Überprüfen die Eingaben"
+                            message = "Messung konnte nicht gespeichert werden. Überprüfe die Eingaben"
                         ))
                     }
                 }
