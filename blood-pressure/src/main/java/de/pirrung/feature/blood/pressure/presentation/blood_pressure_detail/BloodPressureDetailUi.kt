@@ -36,7 +36,6 @@ fun BloodPressureDetailScreen(
         viewModel.onEvent(event = BloodPressureDetailEvent.LoadBloodPressureMeasurement(id = id))
     }
 
-    val coroutineScope = rememberCoroutineScope()
     val measurementState = viewModel.measurementState.value
 
     Scaffold(
@@ -53,14 +52,12 @@ fun BloodPressureDetailScreen(
                 },
                 actions = {
                     IconButton(onClick = {
-                        coroutineScope.launch {
-                            viewModel.onEvent(
-                                event = BloodPressureDetailEvent.DeleteBloodPressureMeasurement(
-                                    measurement = measurementState.measurement!!
-                                )
+                        viewModel.onEvent(
+                            event = BloodPressureDetailEvent.DeleteBloodPressureMeasurement(
+                                measurement = measurementState.measurement!!
                             )
-                            onBackClicked()
-                        }
+                        )
+                        onBackClicked()
                     }
                     ) {
                         Icon(imageVector = Icons.Default.Delete, contentDescription = null)
@@ -108,30 +105,17 @@ fun BloodPressureDetailScreen(
                 valueText = measurementState.measurement?.pulse.toString(),
                 valueUnit = "bpm"
             )
-            if (measurementState.measurement?.note?.isNotBlank() == true)
-                BloodPressureDetailCard(
-                    modifier = Modifier
-                        .padding(start = 15.dp, end = 15.dp, bottom = 15.dp)
-                        .fillMaxHeight()
-                        .fillMaxWidth(),
-                    verticalArrangement = Arrangement.Top,
-                    valueTextStyle = DetailTypography.body2,
-                    headerText = "Notiz",
-                    valueText = measurementState.measurement.note!!,
-                    valueUnit = ""
-                )
-            else
-                BloodPressureDetailCard(
-                    modifier = Modifier
-                        .padding(start = 15.dp, end = 15.dp, bottom = 15.dp)
-                        .fillMaxHeight()
-                        .fillMaxWidth(),
-                    verticalArrangement = Arrangement.Top,
-                    valueTextStyle = DetailTypography.body2,
-                    headerText = "Notiz",
-                    valueText = "Du hast bei dieser Messung keine Notiz hinzugefügt.",
-                    valueUnit = ""
-                )
+            BloodPressureDetailCard(
+                modifier = Modifier
+                    .padding(start = 15.dp, end = 15.dp, bottom = 15.dp)
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.Top,
+                valueTextStyle = DetailTypography.body2,
+                headerText = "Notiz",
+                valueText = if (measurementState.measurement?.note?.isNotBlank() == true) measurementState.measurement.note!! else "Du hast bei dieser Messung keine Notiz hinzugefügt.",
+                valueUnit = ""
+            )
         }
     }
 }
