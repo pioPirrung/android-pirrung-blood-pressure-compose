@@ -27,7 +27,6 @@ fun BloodPressureAppNavigation(
     ) {
         composable(route = Screen.BloodPressureScreen.route) {
             BloodPressureScreen(
-                viewModel = get(),
                 navToBloodPressureDetail = { bloodPressureId ->
                     navController.navigate(
                         Screen.BloodPressureDetailScreen.route + "?bloodPressureId=$bloodPressureId"
@@ -40,7 +39,6 @@ fun BloodPressureAppNavigation(
         }
         composable(route = Screen.AddBloodPressureMeasurementScreen.route) {
             AddBloodPressureMeasurementScreen(
-                viewModel = get(),
                 onSaveClicked = { navController.navigateUp() },
                 onBackClicked = { navController.navigateUp() }
             )
@@ -57,7 +55,6 @@ fun BloodPressureAppNavigation(
             val id = it.arguments?.getInt("bloodPressureId")
             BloodPressureDetailScreen(
                 id = id,
-                viewModel = get(),
                 onBackClicked = { navController.navigateUp() }
             )
         }
