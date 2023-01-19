@@ -11,9 +11,7 @@ import androidx.navigation.navArgument
 import de.pirrung.feature.blood.pressure.presentation.add_blood_pressure.AddBloodPressureMeasurementScreen
 import de.pirrung.feature.blood.pressure.presentation.blood_pressure.BloodPressureScreen
 import de.pirrung.feature.blood.pressure.presentation.blood_pressure_detail.BloodPressureDetailScreen
-import de.pirrung.feature.blood.pressure.presentation.blood_pressure_detail.BloodPressureDetailViewModel
 import de.pirrung.feature.blood.pressure.presentation.util.Screen
-import org.koin.androidx.compose.get
 
 @Composable
 fun BloodPressureAppNavigation(
